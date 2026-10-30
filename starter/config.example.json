@@ -1,0 +1,21 @@
+{
+  "brightness": 80,
+  "startPage": "home",
+  "pages": {
+    "home": {
+      "keys": {
+        "0": { "label": "TEST\nPAGE", "action": "shell", "cmd": "lp -d MyPrinter /path/to/test-page.pdf", "windowsCmd": "powershell -NoProfile -Command \"Start-Process 'C:\\\\labels\\\\test.pdf' -Verb Print\"" },
+        "1": { "label": "QUEUE", "action": "page", "page": "queue" },
+        "2": { "label": "PAUSE", "hold": true, "action": "shell", "cmd": "cupsdisable MyPrinter", "windowsCmd": "powershell -NoProfile -Command \"Get-PrintJob -PrinterName MyPrinter | Suspend-PrintJob\"" },
+        "3": { "label": "RESUME", "action": "shell", "cmd": "cupsenable MyPrinter", "windowsCmd": "powershell -NoProfile -Command \"Get-PrintJob -PrinterName MyPrinter | Resume-PrintJob\"" },
+        "5": { "label": "CLEAR\nJOBS", "hold": true, "color": "#ff3b30", "action": "shell", "cmd": "cancel -a MyPrinter", "windowsCmd": "powershell -NoProfile -Command \"Get-PrintJob -PrinterName MyPrinter | Remove-PrintJob\"" }
+      }
+    },
+    "queue": {
+      "keys": {
+        "0": { "label": "BACK", "action": "page", "page": "home" },
+        "1": { "label": "JOBS", "action": "status", "cmd": "lpstat -o MyPrinter | wc -l", "windowsCmd": "powershell -NoProfile -Command \"(Get-PrintJob -PrinterName MyPrinter).Count\"", "every": 3000 }
+      }
+    }
+  }
+}
